@@ -2,21 +2,32 @@ const userData = require("../data/users.js");
 
 module.exports = function (app) {
     app.post("/api/users", (req, res) => {
+        let newUser = req.body;
         let newUserScores = req.body.scoreArry;
         makeInt(newUserScores);
 
+        let scoreDifferences = [];
 
 
-        userData.forEach((userObj) => {
-            userObj.scoreArry
+
+        userData.forEach((existingUser, index) => {
+            existingUser.scoreArry
+
+            let totalDiff = 0;
+            for (let i = 0; i < newUserScores.length; i++) {
+                let diffAtIndex = difference(existingUser.scoreArry[i], newUserScores[i]);
+
+                totalDiff += diffAtIndex;
+            }
+            scoreDifferences.push(totalDiff);
         });
 
+        let indexOfMatch = findIndexOfMin(scoreDifferences);
 
 
 
 
-
-        userData.push(req.body); // do this last
+        userData.push(newUser); // do this last
         res.json(userData);
     });
 }
