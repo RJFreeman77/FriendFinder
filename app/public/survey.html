@@ -213,6 +213,9 @@
                     console.log("sending user information");
                 });
 
+                $(".form-control").each(function () {
+                    $(this).val("");
+                });
             } else {
                 alert("Please fill out the required fields");
             }
