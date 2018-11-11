@@ -8,8 +8,6 @@ module.exports = function (app) {
 
         let scoreDifferences = [];
 
-
-
         userData.forEach((existingUser, index) => {
             existingUser.scoreArry
 
@@ -24,11 +22,8 @@ module.exports = function (app) {
 
         let indexOfMatch = findIndexOfMin(scoreDifferences);
 
-
-
-
+        res.json(userData[indexOfMatch]);
         userData.push(newUser); // do this last
-        res.json(userData);
     });
 }
 
@@ -52,4 +47,3 @@ function makeInt(arr) {
         arr.splice(index, 1, parseInt(numString));
     });
 }
-// need to push these into an array, then need to return arr.indexOf(Math.min(...arr));

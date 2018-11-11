@@ -9,7 +9,13 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
         crossorigin="anonymous">
+    <style>
+    #match-photo {
+        display: block;
+        margin: auto;
+    }
 
+</style>
 </head>
 
 <body>
@@ -167,6 +173,30 @@
         </section>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="match-modal" tabindex="-1" role="dialog" aria-labelledby="match-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="match-modal-title">Your Match Is...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 id="match-name"></h6>
+                    <p id="match-twitter"></p>
+                    <div>
+                        <img id="match-photo" src="" alt="Match Picture">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -211,6 +241,12 @@
 
                 $.post("/api/users", newUser, function (data) {
                     console.log("sending user information");
+                    console.log(data);
+                    $("#match-name").text(data.userName);
+                    $("#match-twitter").text(data.twitter);
+                    $("#match-photo").attr("src", data.photoLink);
+
+                    $('#match-modal').modal('show')
                 });
 
                 $(".form-control").each(function () {
