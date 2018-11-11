@@ -1,15 +1,14 @@
-const userData = require("../data/users.js");
+const existingUserData = require("../data/users.js");
 
 module.exports = function (app) {
     app.post("/api/users", (req, res) => {
         let newUser = req.body;
         let newUserScores = req.body.scoreArry;
-        makeInt(newUserScores);
+        numStringToInt(newUserScores);
 
         let scoreDifferences = [];
 
-        userData.forEach((existingUser, index) => {
-            existingUser.scoreArry
+        existingUserData.forEach((existingUser, index) => {
 
             let totalDiff = 0;
             for (let i = 0; i < newUserScores.length; i++) {
@@ -22,8 +21,8 @@ module.exports = function (app) {
 
         let indexOfMatch = findIndexOfMin(scoreDifferences);
 
-        res.json(userData[indexOfMatch]);
-        userData.push(newUser); // do this last
+        res.json(existingUserData[indexOfMatch]);
+        existingUserData.push(newUser);
     });
 }
 
@@ -32,6 +31,7 @@ function difference(num1, num2) {
     return Math.abs(num1 - num2);
 }
 
+// Did not end up needing this function
 function totalDifference(arr) {
     let total = 0;
     arr.forEach(int => (total += int));
@@ -42,7 +42,7 @@ function findIndexOfMin(arr) {
     return arr.indexOf(Math.min(...arr));
 }
 
-function makeInt(arr) {
+function numStringToInt(arr) {
     arr.forEach((numString, index) => {
         arr.splice(index, 1, parseInt(numString));
     });
